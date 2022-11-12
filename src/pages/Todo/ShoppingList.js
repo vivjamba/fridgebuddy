@@ -3,9 +3,9 @@ import api from "../../api/api";
 import { FetchState, useGetTodos } from "../../hooks";
 import { Server } from "../../utils/config";
 import Alert from "../Alert/Alert";
-import TodoItem from "./TodoItem";
+import ShoppingItem from "./ShoppingItem";
 
-const Todo = ({ user, dispatch }) => {
+const Shopping = ({ user, dispatch }) => {
   const [stale, setStale] = useState({ stale: false });
   const [{ todos, isLoading, isError }] = useGetTodos(stale);
   const [currentTodo, setCurrentTodo] = useState("");
@@ -56,7 +56,7 @@ const Todo = ({ user, dispatch }) => {
             <input
               type="text"
               className="w-full my-8 px-6 py-4 text-xl rounded-lg border-0 focus:ring-2 focus:ring-gray-800 transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110 hover:shadow-xl shadow-md"
-              placeholder="🤔   What to do today?"
+              placeholder="🤔   What to buy today?"
               value={currentTodo}
               onChange={(e) => setCurrentTodo(e.target.value)}
             ></input>
@@ -66,7 +66,7 @@ const Todo = ({ user, dispatch }) => {
 
           <ul>
             {todos.map((item) => (
-              <TodoItem key={item["$id"]} item={item} setStale={setStale} />
+              <ShoppingItem key={item["$id"]} item={item} setStale={setStale} />
             ))}
           </ul>
         </div>
@@ -81,4 +81,4 @@ const Todo = ({ user, dispatch }) => {
   );
 };
 
-export default Todo;
+export default Shopping;
