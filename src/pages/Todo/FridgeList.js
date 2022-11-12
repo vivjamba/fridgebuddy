@@ -65,7 +65,7 @@ const Fridge = ({ user, dispatch }) => {
           {isLoading && <h1> Loading .... </h1>}
 
           <ul>
-            {todos.map((item) => (
+            {todos.filter((item) => item["isBought"]).map((item) => (
               <FridgeItem key={item["$id"]} item={item} setStale={setStale} />
             ))}
           </ul>
