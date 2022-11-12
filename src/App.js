@@ -16,7 +16,7 @@ function App() {
           {user ? <Fridge user={user} dispatch={dispatch} /> : <Redirect to="/login" />}
         </Route>
         <Route path="/shoppinglist">
-           {user ? <Shopping user={user} dispatch={dispatch} /> : <Redirect to="/login" />}
+           <Shopping user={user} dispatch={dispatch} /> 
         </Route>
         <Route path="/login">
           {user ? <Redirect to="/fridge" /> : <Login dispatch={dispatch}/>}

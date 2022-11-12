@@ -7,7 +7,7 @@ import FridgeItem from "./FridgeItem";
 
 const Fridge = ({ user, dispatch }) => {
   const [stale, setStale] = useState({ stale: false });
-  const [{ items, isLoading, isError }] = useGetTodos(stale);
+  const [{ todos, isLoading, isError }] = useGetTodos(stale);
   const [currentTodo, setCurrentTodo] = useState("");
 
   const handleAddTodo = async (e) => {
@@ -65,7 +65,7 @@ const Fridge = ({ user, dispatch }) => {
           {isLoading && <h1> Loading .... </h1>}
 
           <ul>
-            {items.map((item) => (
+            {todos.map((item) => (
               <FridgeItem key={item["$id"]} item={item} setStale={setStale} />
             ))}
           </ul>

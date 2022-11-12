@@ -3,11 +3,11 @@ import api from "../../api/api";
 import { FetchState, useGetTodos } from "../../hooks";
 import { Server } from "../../utils/config";
 import Alert from "../Alert/Alert";
-import ShoppingItem from "./FridgeItem";
+import ShoppingItem from "./ShoppingItem";
 
 const Shopping = ({ user, dispatch }) => {
   const [stale, setStale] = useState({ stale: false });
-  const [{ items, isLoading, isError }] = useGetTodos(stale);
+  const [{ todos, isLoading, isError }] = useGetTodos(stale);
   const [currentTodo, setCurrentTodo] = useState("");
 
   const handleAddTodo = async (e) => {
@@ -65,7 +65,7 @@ const Shopping = ({ user, dispatch }) => {
           {isLoading && <h1> Loading .... </h1>}
 
           <ul>
-            {items.map((item) => (
+            {todos.map((item) => (
               <ShoppingItem key={item["$id"]} item={item} setStale={setStale} />
             ))}
           </ul>
