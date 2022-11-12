@@ -15,7 +15,7 @@ const Todo = ({ user, dispatch }) => {
     console.log("Adding Todo");
     const data = {
       content: currentTodo,
-      isComplete: false,
+      isBought: false,
     };
     console.log(data, user);
     try {

@@ -6,7 +6,7 @@ const TodoItem = ({ item, setStale }) => {
   const handleComplete = async (e, item) => {
     console.log("Marking Todo as complete");
     let data = {
-      isComplete: !item["isComplete"],
+      isBought: !item["isBought"],
     };
     try {
       console.log(item)
@@ -39,12 +39,14 @@ const TodoItem = ({ item, setStale }) => {
         <input
           type="checkbox"
           className="h-6 w-6 text-green-500 rounded-md border-4 border-green-200 focus:ring-0 transition duration-75 ease-in-out transform hover:scale-125"
-          checked={item["isComplete"]}
+          //checked takes a boolean
+          checked={item["isBought"]}
           onChange={(e) => handleComplete(e, item)}
         />
         <div
+        //puts line through item if not bought
           className={`capitalize ml-3 text-md font-medium ${
-            item["isComplete"] ? "line-through" : ""
+            item["isBought"] ? "line-through" : ""
           }`}
         >
           {item["content"]}
