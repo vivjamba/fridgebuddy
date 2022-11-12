@@ -5,7 +5,7 @@ import { deleteButton } from "../icons";
 const current = new Date();
 // const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
 
-const TodoItem = ({ item, setStale }) => {
+const ShoppingItem = ({ item, setStale }) => {
   const handleComplete = async (e, item) => {
     console.log("Marking Todo as complete");
     let data = {
@@ -66,4 +66,4 @@ const TodoItem = ({ item, setStale }) => {
   );
 };
 
-export default TodoItem;
+export default ShoppingItem;
