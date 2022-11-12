@@ -26,6 +26,14 @@ const FridgeItem = ({ item, setStale }) => {
           {item["content"]}
         </div>
       </div>
+      <div
+        //puts line through item if not bought
+          className={`capitalize ml-3 text-md font-medium ${
+            !item["isBought"] ? "line-through" : ""
+          }`}
+        >
+          {item["boughtDate"]}
+        </div>
       <button
         onClick={(e) => handleDelete(e, item)}
         className="focus:outline-none transition duration-75 ease-in-out transform hover:scale-125"
