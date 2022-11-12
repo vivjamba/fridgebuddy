@@ -4,11 +4,17 @@ import { FetchState, useGetTodos } from "../../hooks";
 import { Server } from "../../utils/config";
 import Alert from "../Alert/Alert";
 import ShoppingItem from "./ShoppingItem";
+import { useHistory } from "react-router-dom";
 
 const Shopping = ({ user, dispatch }) => {
   const [stale, setStale] = useState({ stale: false });
   const [{ todos, isLoading, isError }] = useGetTodos(stale);
   const [currentTodo, setCurrentTodo] = useState("");
+  const history = useHistory();
+
+  const handleNav = () => {
+    history.push("/fridge");
+  };
 
   const handleAddTodo = async (e) => {
     e.preventDefault();
@@ -49,14 +55,15 @@ const Shopping = ({ user, dispatch }) => {
         {isError && <Alert color="red" message="Something went wrong..." />}
         <div className="my-auto p-16 rounded-lg text-center">
           <div className="font-bold text-3xl md:text-5xl lg:text-6xl">
-            📝 <br /> &nbsp; toTooooDoooos
+            🛍️ <br />
+            Shopping List
           </div>
 
           <form onSubmit={handleAddTodo}>
             <input
               type="text"
               className="w-full my-8 px-6 py-4 text-xl rounded-lg border-0 focus:ring-2 focus:ring-gray-800 transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110 hover:shadow-xl shadow-md"
-              placeholder="🤔   What to buy today?"
+              placeholder="Add food item"
               value={currentTodo}
               onChange={(e) => setCurrentTodo(e.target.value)}
             ></input>
@@ -72,11 +79,20 @@ const Shopping = ({ user, dispatch }) => {
         </div>
       </section>
 
-      <section className="absolute bottom-0 right-0 py-3 px-6 mr-8 mb-8">
+      <section className="absolute top-0 left-0 py-3 px-6 mr-8 mb-8">
+        <button
+            onClick={handleNav}
+            className="mx-auto mt-4 py-3 px-12 font-semibold text-md rounded-lg shadow-md bg-white text-gray-900 border border-gray-900 hover:border-transparent hover:text-white hover:bg-gray-900 focus:outline-none">
+            Go to My Fridge ❄️
+          </button>
+      </section>
+      <section className="absolute top-0 right-0 py-3 px-6 mr-8 mb-8">
         <button onClick={handleLogout} className="mx-auto mt-4 py-3 px-12 font-semibold text-md rounded-lg shadow-md bg-white text-gray-900 border border-gray-900 hover:border-transparent hover:text-white hover:bg-gray-900 focus:outline-none">
-          Logout 👋
+          Logout 
         </button>
       </section>
+
+
     </>
   );
 };
