@@ -1,7 +1,7 @@
 import { useState } from "react";
 import api from "../../api/api";
 import { FetchState, useGetTodos } from "../../hooks";
-import { Server } from "../../utils/config";
+// import { Server } from "../../utils/config";
 import Alert from "../Alert/Alert";
 import FridgeItem from "./FridgeItem";
 import { useHistory } from "react-router-dom";
@@ -9,7 +9,7 @@ import { useHistory } from "react-router-dom";
 const Fridge = ({ user, dispatch }) => {
   const [stale, setStale] = useState({ stale: false });
   const [{ todos, isLoading, isError }] = useGetTodos(stale);
-  const [currentTodo, setCurrentTodo] = useState("");
+  // const [currentTodo, setCurrentTodo] = useState("");
   const history = useHistory();
 
   const handleNav = () => {
@@ -17,27 +17,27 @@ const Fridge = ({ user, dispatch }) => {
   };
 
 
-  const handleAddTodo = async (e) => {
-    e.preventDefault();
-    console.log("Adding Todo");
-    const data = {
-      content: currentTodo,
-      isBought: false,
-    };
-    console.log(data, user);
-    try {
-      await api.createDocument(
-        Server.collectionID,
-        data,
-        [`user:${user["$id"]}`],
-        [`user:${user["$id"]}`]
-      );
-      setStale({ stale: true });
-      setCurrentTodo("");
-    } catch (e) {
-      console.log("Error in adding todo");
-    }
-  };
+  // const handleAddTodo = async (e) => {
+  //   e.preventDefault();
+  //   console.log("Adding Todo");
+  //   const data = {
+  //     content: currentTodo,
+  //     isBought: false,
+  //   };
+  //   console.log(data, user);
+  //   try {
+  //     await api.createDocument(
+  //       Server.collectionID,
+  //       data,
+  //       [`user:${user["$id"]}`],
+  //       [`user:${user["$id"]}`]
+  //     );
+  //     setStale({ stale: true });
+  //     setCurrentTodo("");
+  //   } catch (e) {
+  //     console.log("Error in adding todo");
+  //   }
+  // };
 
 
   const handleLogout = async (e) => {
