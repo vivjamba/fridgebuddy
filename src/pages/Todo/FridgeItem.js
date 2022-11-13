@@ -125,13 +125,14 @@ const FridgeItem = ({ item, setStale }) => {
     }
   };
 
+  console.log(typeof currentDaysLeft, currentDaysLeft);
 
 
   // console.log(item["expDate"]);
   // console.log(new Date(item['expDate']).getDate());
 
   return (
-    <><li className="flex justify-between items-center mt-4 px-4">
+    <><li className="flex justify-between items-center mt-4 px-4" style={{"color" : ( parseInt(getDaysLeft()) < 0 ? "red" : "")}}>
       <div className="flex">
         <div
           //puts line through item if not bought
