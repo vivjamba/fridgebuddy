@@ -5,6 +5,7 @@ import { FetchState, useGetTodos } from "../../hooks";
 import Alert from "../Alert/Alert";
 import FridgeItem from "./FridgeItem";
 import { useHistory } from "react-router-dom";
+import logo from '../../static/logo.png';
 
 const Fridge = ({ user, dispatch }) => {
   const [stale, setStale] = useState({ stale: false });
@@ -56,12 +57,19 @@ const Fridge = ({ user, dispatch }) => {
         {isError && <Alert color="red" message="Something went wrong..." />}
         <div className="my-auto p-16 rounded-lg text-center">
           <div className="font-bold text-3xl md:text-5xl lg:text-6xl">
-           ❄️ <br /> &nbsp; My Fridge
+          <img src={logo} alt="logo icon" style={{
+                  width:200,
+                  height:200,
+                  marginLeft:"28%"
+                }}/>
+                <br /> &nbsp; My Fridge
           </div>
 
           {isLoading && <h1> Loading .... </h1>}
 
-          <ul>
+          <ul style={{
+                  marginTop:"7%"
+                }}>
             {todos.filter((item) => item["isBought"]).map((item) => (
               <FridgeItem key={item["$id"]} item={item} setStale={setStale} />
             ))}
@@ -73,7 +81,7 @@ const Fridge = ({ user, dispatch }) => {
         <button
             onClick={handleNav}
             className="mx-auto mt-4 py-3 px-12 font-semibold text-md rounded-lg shadow-md bg-white text-gray-900 border border-gray-900 hover:border-transparent hover:text-white hover:bg-gray-900 focus:outline-none">
-            Go to My Shopping List
+            Go to My Shopping List 🛍️
           </button>
       </section>
       <section className="absolute top-0 right-0 py-3 px-6 mr-8 mb-8">
@@ -81,7 +89,7 @@ const Fridge = ({ user, dispatch }) => {
           Logout 
         </button>
       </section>
-
+      
     </>
   );
 };
