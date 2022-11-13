@@ -1,11 +1,11 @@
 import api from "../../api/api";
 import { Server } from "../../utils/config";
 import { deleteButton } from "../icons";
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 
-import {Grid, Typography, Box, IconButton, Alert, Collapse, Paper, Modal, Button, TextField} from '@mui/material'
+import {Typography, Box, Modal, Button} from '@mui/material'
 
-import Select from 'react-select'
+// import Select from 'react-select'
 
 
 const FridgeItem = ({ item, setStale }) => {
