@@ -20,6 +20,11 @@ const FridgeItem = ({ item, setStale }) => {
     //datastuff
     handleCloseModal()
   }
+  const getMMDDYYYY= (dateString) => {
+    //datastuff
+    const d = (new Date(dateString))
+    return String(d.getMonth()+'/'+d.getDay()+'/'+d.getYear());
+  }
 
   const handleDelete = async (e, item) => {
     console.log("Deleting Todo");
@@ -52,6 +57,7 @@ const FridgeItem = ({ item, setStale }) => {
         >
           {item["boughtDate"]}
         </div>
+        <div className="flex">
       <button
         onClick={(e) => handleDelete(e, item)}
         className="focus:outline-none transition duration-75 ease-in-out transform hover:scale-125"
@@ -64,6 +70,7 @@ const FridgeItem = ({ item, setStale }) => {
       >
         ✎
       </button>
+      </div>
       {/* <Button variant="contained" onClick = {handleAddItem} sx = {{margin: "10px", backgroundColor: 'rgb(138, 220, 255)', color: 'rgb(0,0,0)', hover: { backgroundColor: 'rgb(195, 184, 222)'}}}>
         Edit Item
       </Button> */}
@@ -75,41 +82,53 @@ const FridgeItem = ({ item, setStale }) => {
      open={addItemModal}
      onClose={handleCloseModal}
      >
-       <Box style={{borderRadius: '20px'}} sx = {{position: 'absolute', top: '25%', left: '25%', width: "50%", height: "50%", padding: "30px", backgroundColor: 'rgb(255, 255, 255)'}}>
+       <Box style={{borderRadius: '20px'}} sx = {{position: 'absolute', top: '10%', left: '25%', width: "50%", height: "80%", padding: "30px", backgroundColor: 'rgb(255, 255, 255)'}}>
          <Typography id="modal-modal-title" variant="h5" component="h4">
          <b>Edit Item</b>
-         </Typography>
-         {/* <Typography id="modal-modal-description" sx={{ mt: 2, marginBottom: "5px"}}>
-           Enter the information about your item 
-         </Typography> */}
-         {/* <TextField sx = {{width: "100%", padding: "5px"}} id="standard" label="Name of item" variant="standard"/> */}
-         {/* <TextField sx = {{width: "100%", padding: "5px"}}id="standard" label="Name of item" variant="standard" onChange={(newValue) => }/> */}
-         <Typography id="modal-modal-title" variant="h5" style={{paddingTop: "30px", justifyContent:"center", alignText: "center", width: "100%"}}>
+         </Typography><Typography id="modal-modal-title" variant="h5" style={{paddingTop: "30px", justifyContent:"center", alignText: "center", width: "100%"}}>
          {item["content"]}
          </Typography>
          <ul style={{paddingTop: "30px"}}>
           <li>
-            Bought Date:  <b>{item["boughtDate"]}</b>
+            Bought Date:            
+            <form style={{paddingBottom: "30px"}}>
+            <input
+              type="text"
+              className="w-full my-2 px-6 py-4 text-xl rounded-lg border-0 focus:ring-2 focus:ring-gray-800 transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110 hover:shadow-xl shadow-md"
+              placeholder={getMMDDYYYY(item["boughtDate"])}
+              // value={currentTodo}
+              onChange={(e) => (e.target.value)}
+            ></input>
+          </form >
           </li>
-            {/* <Select 
-              styles = {{margin: 5}}
-              placeholder = {"Enter item type..."}
-              //  onChange = {handleChangeType}
-              closeMenuOnSelect={true}
-              //  options={optionsForType}
-            /> */}
             <li>
-            Exp Date:  <b>{item["expDate"]}</b>
+            Exp Date:  <b>{item["expDate"]}</b> 
+            <form style={{paddingBottom: "30px"}}>
+            <input
+              type="text"
+              className="w-full my-2 px-6 py-4 text-xl rounded-lg border-0 focus:ring-2 focus:ring-gray-800 transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110 hover:shadow-xl shadow-md"
+              placeholder={getMMDDYYYY(item["expDate"])}
+              // value={currentTodo}
+              onChange={(e) => (e.target.value)}
+            ></input>
+          </form>     
+            {/* <button
+        className="focus:outline-none transition duration-75 ease-in-out transform hover:scale-125"
+      >
+        ✎
+      </button> */}
             </li>
-            {/* <Select
-              closeMenuOnSelect={true}
-              isMulti
-              //  onChange = {handleChangeAttributes}
-              placeholder = {"Select one or more attributes"}
-              //  options={optionsForWeather}
-            /> */}
+            
             <li>
-            Days Left:  <b>4</b>
+            Days Left:            <form style={{paddingBottom: "30px"}}>
+            <input
+              type="text"
+              className="w-full my-2 px-6 py-4 text-xl rounded-lg border-0 focus:ring-2 focus:ring-gray-800 transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110 hover:shadow-xl shadow-md"
+              placeholder={4}
+              // value={currentTodo}
+              onChange={(e) => (e.target.value)}
+            ></input>
+          </form>
             </li>
           </ul>
          <Button variant="contained" onClick = {handleOnClick} sx={{display: "flex", justifyContent:"center", alignItems: "center", marginTop: "20px", marginInline: "auto", fontFamily: 'Arial', backgroundColor: 'rgb(138, 220, 255)', ': hover': { backgroundColor: 'rgb(207, 241, 255)'}}}>Close</Button>
