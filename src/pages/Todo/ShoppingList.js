@@ -18,7 +18,7 @@ const Shopping = ({ user, dispatch }) => {
 
   const handleAddTodo = async (e) => {
     e.preventDefault();
-    console.log("Adding Todo");
+    console.log("Adding");
     const data = {
       content: currentTodo,
       isBought: false,
@@ -34,7 +34,7 @@ const Shopping = ({ user, dispatch }) => {
       setStale({ stale: true });
       setCurrentTodo("");
     } catch (e) {
-      console.log("Error in adding todo");
+      console.log("Error in adding");
     }
   };
 
