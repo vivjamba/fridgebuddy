@@ -1,10 +1,10 @@
 [build]
-  command = "npm start"
+  command = "npm run build"
   publish = "build"
 
 [[redirects]]
   from = "/*"
-  to = "/fridge"
+  to = "/index.html"
   status = 200
 
 [template.environment]
