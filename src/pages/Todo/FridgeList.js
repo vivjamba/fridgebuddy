@@ -6,6 +6,7 @@ import Alert from "../Alert/Alert";
 import FridgeItem from "./FridgeItem";
 import { useHistory } from "react-router-dom";
 
+
 const Fridge = ({ user, dispatch }) => {
   const [stale, setStale] = useState({ stale: false });
   const [{ todos, isLoading, isError }] = useGetTodos(stale);
@@ -52,12 +53,14 @@ const Fridge = ({ user, dispatch }) => {
 
   return (
     <>
+
       <section className="container h-screen max-h-screen px-3 max-w-xl mx-auto flex flex-col">
         {isError && <Alert color="red" message="Something went wrong..." />}
         <div className="my-auto p-16 rounded-lg text-center">
           <div className="font-bold text-3xl md:text-5xl lg:text-6xl">
            ❄️ <br /> &nbsp; My Fridge
           </div>
+
 
           {isLoading && <h1> Loading .... </h1>}
 
