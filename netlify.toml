@@ -8,7 +8,7 @@
   status = 200
 
 [template.environment]
-  REACT_APP_ENDPOINT = "Your Appwrite Server Endpoint"
-  REACT_APP_PROJECT = "Your Appwrite project ID"
-  REACT_APP_COLLECTION_ID = "Your Collection ID"
-  REACT_APP_DATABASE_ID = "Your Database ID"
+  REACT_APP_ENDPOINT = https://www.fridgebuddy.tech
+  REACT_APP_PROJECT = 636f3bb94af04e46d7b1
+  REACT_APP_COLLECTION_ID = 636fc0c65d8890e04b5f
+  REACT_APP_DATABASE_ID = 636fbecba5326c783b1c
