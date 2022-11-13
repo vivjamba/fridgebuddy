@@ -10,6 +10,9 @@ import Select from 'react-select'
 
 const FridgeItem = ({ item, setStale }) => {
   const [addItemModal, openAddItem] = useState(false);
+  const [currentExpDate, setCurrentExpDate] = useState("");
+  const [currentBoughtDate, setCurrentBoughtDate] = useState("");
+  const [currentDaysLeft, setCurrentDaysLeft] = useState("");
 
   const handleAddItem = () =>{
     openAddItem(true)
@@ -25,11 +28,12 @@ const FridgeItem = ({ item, setStale }) => {
   const getMMDDYYYY= (dateString) => {
     //datastuff
     const d = (new Date(dateString))
-    return String(d.getMonth()+'/'+d.getDay()+'/'+d.getYear());
+    // return String(d.getMonth())+'/'+String(d.getDay())+'/'+d.getFullYear();
+    return `${d.getMonth()+1}/${d.getDate()}/${d.getFullYear()}`;
   }
 
   const handleDelete = async (e, item) => {
-    console.log("Deleting Todo");
+    console.log("Deleting");
     try {
       await api.deleteDocument(Server.collectionID, item["$id"]);
       setStale({ stale: true });
@@ -37,6 +41,67 @@ const FridgeItem = ({ item, setStale }) => {
       console.log("Error in deleting todo");
     }
   };
+
+  const updateBoughtDate = async (e, item) => {
+    let data = {
+      boughtDate : currentBoughtDate
+    };
+    try {
+      console.log(currentBoughtDate)
+      console.log(Date(currentBoughtDate))
+      console.log(item)
+      await api.updateDocument(
+        Server.collectionID,
+        item["$id"],
+        data,
+        item["$read"],
+        item["$write"]
+      );
+      setStale({ stale: true });
+    } catch (e) {
+      console.log("Error in updating date");
+    }
+  };
+
+  const updateExpDate = async (e, item) => {
+    let data = {
+      expDate : currentExpDate
+    };
+    try {
+      console.log(item)
+      await api.updateDocument(
+        Server.collectionID,
+        item["$id"],
+        data,
+        item["$read"],
+        item["$write"]
+      );
+      setStale({ stale: true });
+    } catch (e) {
+      console.log("Error in updating date");
+    }
+  };
+
+  const updateDaysLeft = async (e, item) => {
+    let data = {
+      expDate : currentExpDate
+    };
+    try {
+      console.log(item)
+      await api.updateDocument(
+        Server.collectionID,
+        item["$id"],
+        data,
+        item["$read"],
+        item["$write"]
+      );
+      setStale({ stale: true });
+    } catch (e) {
+      console.log("Error in updating date");
+    }
+  };
+
+
 
   // console.log(item["expDate"]);
   // console.log(new Date(item['expDate']).getDate());
@@ -91,25 +156,24 @@ const FridgeItem = ({ item, setStale }) => {
           <ul style={{ paddingTop: "30px" }}>
             <li>
               Bought Date:
-              <form style={{ paddingBottom: "30px" }}>
+              <form onSumbit={updateBoughtDate} style={{ paddingBottom: "30px" }}>
                 <input
                   type="text"
                   className="w-full my-2 px-6 py-4 text-xl rounded-lg border-0 focus:ring-2 focus:ring-gray-800 transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110 hover:shadow-xl shadow-md"
                   placeholder={getMMDDYYYY(item["boughtDate"])}
-                  // value={currentTodo}
-                  onChange={(e) => (e.target.value)}
+                  value={currentBoughtDate}
+                  onChange={(e) => setCurrentBoughtDate(e.target.value)}
                 ></input>
               </form>
             </li>
             <li>
-              Exp Date: <b>{item["expDate"]}</b>
-              <form style={{ paddingBottom: "30px" }}>
+              <form onSumbit={updateExpDate} style={{ paddingBottom: "30px" }}>
                 <input
                   type="text"
                   className="w-full my-2 px-6 py-4 text-xl rounded-lg border-0 focus:ring-2 focus:ring-gray-800 transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110 hover:shadow-xl shadow-md"
                   placeholder={getMMDDYYYY(item["expDate"])}
-                  // value={currentTodo}
-                  onChange={(e) => (e.target.value)}
+                  value={currentExpDate}
+                  onChange={(e) => setCurrentExpDate(e.target.value)}
                 ></input>
               </form>
               {/* <button
@@ -120,13 +184,13 @@ className="focus:outline-none transition duration-75 ease-in-out transform hover
             </li>
 
             <li>
-              Days Left: <form style={{ paddingBottom: "30px" }}>
+              Days Left: <form onSumbit={updateDaysLeft} style={{ paddingBottom: "30px" }}>
                 <input
                   type="text"
                   className="w-full my-2 px-6 py-4 text-xl rounded-lg border-0 focus:ring-2 focus:ring-gray-800 transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110 hover:shadow-xl shadow-md"
                   placeholder={4}
-                  // value={currentTodo}
-                  onChange={(e) => (e.target.value)}
+                  value={currentDaysLeft}
+                  onChange={(e) => setCurrentDaysLeft(e.target.value)}
                 ></input>
               </form>
             </li>

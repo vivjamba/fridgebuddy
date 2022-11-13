@@ -9,7 +9,6 @@ exp.setFullYear(current.getFullYear(),current.getMonth(),current.getDate()+4);
 
 const ShoppingItem = ({ item, setStale }) => {
   const handleComplete = async (e, item) => {
-    console.log("Marking Todo as complete");
     let data = {
       isBought: !item["isBought"],
       boughtDate : current,
@@ -26,17 +25,17 @@ const ShoppingItem = ({ item, setStale }) => {
       );
       setStale({ stale: true });
     } catch (e) {
-      console.log("Error in marking todo as complete");
+      console.log("Error in marking as bought");
     }
   };
 
   const handleDelete = async (e, item) => {
-    console.log("Deleting Todo");
+    console.log("Deleting");
     try {
       await api.deleteDocument(Server.collectionID, item["$id"]);
       setStale({ stale: true });
     } catch (e) {
-      console.log("Error in deleting todo");
+      console.log("Error in deleting");
     }
   };
 
