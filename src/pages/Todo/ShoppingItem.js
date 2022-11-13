@@ -1,6 +1,7 @@
 import api from "../../api/api";
 import { Server } from "../../utils/config";
 import { deleteButton } from "../icons";
+import { getAllIds } from "../../food_api/get"
 
 const current = new Date();
 // const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
@@ -24,6 +25,7 @@ const ShoppingItem = ({ item, setStale }) => {
         item["$read"],
         item["$write"]
       );
+      console.log("returned:", getAllIds(item["content"]));
       setStale({ stale: true });
     } catch (e) {
       console.log("Error in marking todo as complete");
