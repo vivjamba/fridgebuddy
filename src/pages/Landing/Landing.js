@@ -1,6 +1,4 @@
-import { appwrite, github, twitter, react } from "../icons";
 import { useHistory } from "react-router-dom";
-import logo from '../../static/logo.png';
 import logolarge from '../../static/logolarge.png';
 import bg from '../../static/fridgebackground.jpeg';
 
@@ -10,17 +8,6 @@ const Landing = () => {
   const handleClick = () => {
     history.push("/fridge");
   };
-
-  const links = [
-    {
-      href: "https://github.com/vivjamba/fridgebuddy",
-      icon: github(10),
-    },
-    {
-      href: "https://hackumass.com/",
-      icon: twitter(10),
-    }
-  ];
 
   return (
     <>
