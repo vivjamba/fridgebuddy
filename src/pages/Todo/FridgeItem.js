@@ -10,6 +10,9 @@ import Select from 'react-select'
 
 const FridgeItem = ({ item, setStale }) => {
   const [addItemModal, openAddItem] = useState(false);
+  const [currentExpDate, setCurrentExpDate] = useState("");
+  const [currentBoughtDate, setCurrentBoughtDate] = useState("");
+  const [currentDaysLeft, setCurrentDaysLeft] = useState("");
 
   const handleAddItem = () =>{
     openAddItem(true)
@@ -22,14 +25,32 @@ const FridgeItem = ({ item, setStale }) => {
     //datastuff
     handleCloseModal()
   }
+
+  const getDaysLeft = () => {
+    //datastuff
+    //return new Date(item['expDate']).getDate() - new Date().getDate()
+    // To calculate the time difference of two dates
+    const today = new Date()
+    const exp =  new Date(item['expDate'])
+    var Difference_In_Time = exp - today;
+    // To calculate the no. of days between two dates
+    return Math.ceil(Difference_In_Time / (1000 * 3600 * 24));   
+  }
+
+  const getNewExpDate = (diffDays, oldExpDate) => {      
+    // To calculate the no. of days between two dates
+    return new Date(new Date(oldExpDate).getTime() + (diffDays*60000*60*24));
+  }
+
   const getMMDDYYYY= (dateString) => {
     //datastuff
     const d = (new Date(dateString))
-    return String(d.getMonth()+'/'+d.getDay()+'/'+d.getYear());
+    // return String(d.getMonth())+'/'+String(d.getDay())+'/'+d.getFullYear();
+    return `${d.getMonth()+1}/${d.getDate()}/${d.getFullYear()}`;
   }
 
   const handleDelete = async (e, item) => {
-    console.log("Deleting Todo");
+    console.log("Deleting");
     try {
       await api.deleteDocument(Server.collectionID, item["$id"]);
       setStale({ stale: true });
@@ -37,6 +58,74 @@ const FridgeItem = ({ item, setStale }) => {
       console.log("Error in deleting todo");
     }
   };
+
+  const updateBoughtDate = async (e, item) => {
+    e.preventDefault();
+    let data = {
+      boughtDate : new Date(currentBoughtDate)
+    };
+    try {
+      console.log(currentBoughtDate)
+      console.log(new Date(currentBoughtDate))
+      console.log(item)
+      await api.updateDocument(
+        Server.collectionID,
+        item["$id"],
+        data,
+        item["$read"],
+        item["$write"]
+      );
+      setStale({ stale: true });
+      setCurrentBoughtDate("");
+    } catch (e) {
+      console.log("Error in updating date");
+    }
+  };
+
+  const updateExpDate = async (e, item) => {
+    e.preventDefault();
+    let data = {
+      expDate : new Date(currentExpDate)
+    };
+    try {
+      console.log(item)
+      await api.updateDocument(
+        Server.collectionID,
+        item["$id"],
+        data,
+        item["$read"],
+        item["$write"]
+      );
+      setStale({ stale: true });
+      setCurrentExpDate("");
+    } catch (e) {
+      console.log("Error in updating date");
+    }
+  };
+
+  const updateDaysLeft = async (e, item) => {
+    e.preventDefault();
+    const daysDiff = currentDaysLeft-getDaysLeft()//diff between old days left and new
+    let data = {
+      expDate : getNewExpDate(daysDiff,item["expDate"])
+    };
+    try {
+      console.log(item)
+      await api.updateDocument(
+        Server.collectionID,
+        item["$id"],
+        data,
+        item["$read"],
+        item["$write"]
+      );
+      setStale({ stale: true });
+      setCurrentDaysLeft('');
+    } catch (e) {
+      console.log("Error in updating date");
+    }
+  };
+
+
 
   // console.log(item["expDate"]);
   // console.log(new Date(item['expDate']).getDate());
@@ -55,7 +144,7 @@ const FridgeItem = ({ item, setStale }) => {
         //puts line through item if not bought
         className={`capitalize ml-3 text-md font-medium ${!item["isBought"] ? "line-through" : ""}`}
       >
-        {new Date(item['expDate']).getDate() - new Date().getDate()} days left
+        {getDaysLeft()} days left
       </div>
 
       <div className="flex">
@@ -91,25 +180,25 @@ const FridgeItem = ({ item, setStale }) => {
           <ul style={{ paddingTop: "30px" }}>
             <li>
               Bought Date:
-              <form style={{ paddingBottom: "30px" }}>
+              <form onSubmit={(e) => updateBoughtDate(e, item)} style={{ paddingBottom: "30px" }}>
                 <input
                   type="text"
                   className="w-full my-2 px-6 py-4 text-xl rounded-lg border-0 focus:ring-2 focus:ring-gray-800 transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110 hover:shadow-xl shadow-md"
                   placeholder={getMMDDYYYY(item["boughtDate"])}
-                  // value={currentTodo}
-                  onChange={(e) => (e.target.value)}
+                  value={currentBoughtDate}
+                  onChange={(e) => setCurrentBoughtDate(e.target.value)}
                 ></input>
               </form>
             </li>
             <li>
-              Exp Date: <b>{item["expDate"]}</b>
-              <form style={{ paddingBottom: "30px" }}>
+              Exp Date:
+              <form onSubmit={(e) => updateExpDate(e, item)} style={{ paddingBottom: "30px" }}>
                 <input
                   type="text"
                   className="w-full my-2 px-6 py-4 text-xl rounded-lg border-0 focus:ring-2 focus:ring-gray-800 transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110 hover:shadow-xl shadow-md"
                   placeholder={getMMDDYYYY(item["expDate"])}
-                  // value={currentTodo}
-                  onChange={(e) => (e.target.value)}
+                  value={currentExpDate}
+                  onChange={(e) => setCurrentExpDate(e.target.value)}
                 ></input>
               </form>
               {/* <button
@@ -120,13 +209,13 @@ className="focus:outline-none transition duration-75 ease-in-out transform hover
             </li>
 
             <li>
-              Days Left: <form style={{ paddingBottom: "30px" }}>
+              Days Left: <form onSubmit={(e) => updateDaysLeft(e, item)} style={{ paddingBottom: "30px" }}>
                 <input
                   type="text"
                   className="w-full my-2 px-6 py-4 text-xl rounded-lg border-0 focus:ring-2 focus:ring-gray-800 transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110 hover:shadow-xl shadow-md"
-                  placeholder={4}
-                  // value={currentTodo}
-                  onChange={(e) => (e.target.value)}
+                  placeholder={getDaysLeft()}
+                  value={currentDaysLeft}
+                  onChange={(e) => setCurrentDaysLeft(e.target.value)}
                 ></input>
               </form>
             </li>
