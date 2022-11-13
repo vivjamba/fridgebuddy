@@ -32,11 +32,14 @@ const FridgeItem = ({ item, setStale }) => {
     // To calculate the time difference of two dates
     const today = new Date()
     const exp =  new Date(item['expDate'])
-    var Difference_In_Time = exp.getTime() - today.getTime();
-      
+    var Difference_In_Time = exp - today;
     // To calculate the no. of days between two dates
-    return parseInt(Difference_In_Time / (1000 * 3600 * 24))+1;
-      
+    return Math.ceil(Difference_In_Time / (1000 * 3600 * 24));   
+  }
+
+  const getNewExpDate = (diffDays, oldExpDate) => {      
+    // To calculate the no. of days between two dates
+    return new Date(new Date(oldExpDate).getTime() + (diffDays*60000*60*24));
   }
 
   const getMMDDYYYY= (dateString) => {
@@ -102,10 +105,9 @@ const FridgeItem = ({ item, setStale }) => {
 
   const updateDaysLeft = async (e, item) => {
     e.preventDefault();
-    const daysDiff = getDaysLeft()-currentDaysLeft //diff between old days left and new
-    const newExp = 2
+    const daysDiff = currentDaysLeft-getDaysLeft()//diff between old days left and new
     let data = {
-      expDate : new Date(currentExpDate)
+      expDate : getNewExpDate(daysDiff,item["expDate"])
     };
     try {
       console.log(item)
@@ -117,7 +119,7 @@ const FridgeItem = ({ item, setStale }) => {
         item["$write"]
       );
       setStale({ stale: true });
-      setCurrentDaysLeft(null);
+      setCurrentDaysLeft('');
     } catch (e) {
       console.log("Error in updating date");
     }
