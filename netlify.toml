@@ -4,7 +4,7 @@
 
 [[redirects]]
   from = "/*"
-  to = "/index.html"
+  to = "/fridge"
   status = 200
 
 [template.environment]
