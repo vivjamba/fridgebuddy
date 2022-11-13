@@ -14,6 +14,9 @@ const FridgeItem = ({ item, setStale }) => {
     }
   };
 
+  // console.log(item["expDate"]);
+  // console.log(new Date(item['expDate']).getDate());
+
   return (
     <li className="flex justify-between items-center mt-4 px-4">
       <div className="flex">
@@ -32,7 +35,7 @@ const FridgeItem = ({ item, setStale }) => {
             !item["isBought"] ? "line-through" : ""
           }`}
         >
-          {item["boughtDate"]}
+          {new Date(item['expDate']).getDate() - new Date().getDate()} days left
         </div>
       <button
         onClick={(e) => handleDelete(e, item)}

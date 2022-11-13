@@ -4,13 +4,16 @@ import { deleteButton } from "../icons";
 
 const current = new Date();
 // const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
+const exp = new Date(current.getTime())+4;
+//exp.setFullYear(current.getFullYear(),current.getMonth(),current.getDate()+4);
 
 const ShoppingItem = ({ item, setStale }) => {
   const handleComplete = async (e, item) => {
     console.log("Marking Todo as complete");
     let data = {
       isBought: !item["isBought"],
-      boughtDate : current
+      boughtDate : current,
+      expDate : exp
     };
     try {
       console.log(item)
